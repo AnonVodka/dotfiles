@@ -15,6 +15,15 @@ export PATH="$PATH:/home/jeremy/.cargo/bin"
 
 eval "$(zoxide init zsh)"
 
+# SSH Manager based on .ssh/config
+kssh() {
+  local host
+  host=$(awk '/^Host / && !/\*/ {print $2}' ~/.ssh/config | fzf --prompt="Connect to > " --height=40% --reverse)
+  if [[ -n "$host" ]]; then
+    kitten ssh "$host"
+  fi
+}
+
 alias vim=nvim
 alias cd=z # zoxide
 alias cdi=zi # zoxide
